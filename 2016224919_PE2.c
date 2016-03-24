@@ -41,12 +41,9 @@ do_ls(char dirname[]) {
 do_ls_all(const char *dpath, int depth) {
 	DIR *dir_ptr;
 	struct dirent *direntp;
-	if (!(dir_ptr = opendir(dpath))){
+	if (!(dir_ptr = opendir(dpath)) && !(direntp = readdir(dir_ptr))){
 		return;
 	}
-	if (!(direntp = readdir(dir_ptr))){
-		return;
-        }
 	for (; direntp != NULL; direntp = readdir(dir_ptr)) {
 		if (direntp->d_type == DT_DIR) {
 			char path[STR_MAX];
