@@ -29,7 +29,7 @@ do_ls(char dirname[]) {
 	struct dirent *direntp;
 
 	if ((dir_ptr = opendir(dirname)) == NULL) {
-		fprintf(stderr, "error");
+		fprintf(stderr, "open error %s\n", dirname);
 	} else {
 		while ((direntp = readdir(dir_ptr)) != NULL) {
 			printf("%s\n", direntp->d_name);
@@ -44,17 +44,17 @@ do_ls_all(const char *dpath, int depth) {
 	if (!(dir_ptr = opendir(dpath)) && !(direntp = readdir(dir_ptr))){
 		return;
 	}
-	for (; direntp != NULL; direntp = readdir(dir_ptr)) {
-		if (direntp->d_type == DT_DIR) {
+	for ( ; direntp != NULL ; direntp = readdir(dir_ptr) ){
+		if (direntp->d_type == DT_DIR){
 			char path[STR_MAX];
 			int len = snprintf(path, sizeof(path) - 1, "%s/%s", dpath,
 					direntp->d_name);
 			path[len] = 0;
 			if (strcmp(direntp->d_name, ".") == 0
-					|| strcmp(direntp->d_name, "..") == 0) {
+					|| strcmp(direntp->d_name, "..") == 0){
 				continue;
 			}
-			if (!((strlen(direntp->d_name) > 1) && (direntp->d_name[0] == '.'))) {
+			if (!((strlen(direntp->d_name) > 1) && (direntp->d_name[0] == '.'))){
 				printf("\nDirectory name : %s\n", path);
 			}
 /*
