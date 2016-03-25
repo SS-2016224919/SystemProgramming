@@ -80,7 +80,7 @@ void do_ls_all_recursive(char dirname[], int depth) {
 					do_ls_all_recursive(path, depth + 1);
 				} else {
 					if (!((strlen(direntp->d_name) > 1) && (direntp->d_name[0] == '.'))) {
-						printf(" %s\n", direntp->d_name);
+						dostat( direntp->d_name );
 					}
 				}
 			}
